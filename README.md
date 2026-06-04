@@ -10,6 +10,10 @@
 
 ###
 
+<p align="left">🚀 A high school student and developer driven by a passion for exploring the intersection of Artificial Intelligence, Computer Vision, and Robotics. I love building end-to-end innovations that bridge smart software with physical hardware, turning complex engineering ideas into functional, beautiful products.<br><br>- 🔭 I’m currently developing autonomous systems, full-stack web applications, and embedded IoT solutions.<br>- 🌱 Continually expanding my knowledge in advanced machine learning applications and next-gen web frameworks.<br>- 💬 Feel free to reach out if you want to talk about AI models, robotics development, or slick UI design.<br>- ⚡ Fun fact: I have a huge appreciation for Apple-style minimalist layouts and dark-themed developer setups.</p>
+
+###
+
 <h3 align="left">AI & Software Innovation</h3>
 
 ###
@@ -135,20 +139,5 @@
   <img width="10" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matlab/matlab-original.svg" height="50" alt="matlab logo"  />
 </div>
-
-###
-
-<div align="center">
-  <img src="https://streak-stats.demolab.com?user=maurodesouza&locale=en&mode=daily&theme=dracula&hide_border=false&border_radius=5&order=3" height="150" alt="streak graph"  />
-  <img src="https://raw.githubusercontent.com/maurodesouza/maurodesouza/trophy-output/trophy.svg" height="150" alt="trophy graph"  />
-</div>
-
-###
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/maurodesouza/maurodesouza/pacman-output/pacman-contribution-graph-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/maurodesouza/maurodesouza/pacman-output/pacman-contribution-graph.svg">
-  <img alt="pacman contribution graph" src="https://raw.githubusercontent.com/maurodesouza/maurodesouza/pacman-output/pacman-contribution-graph.svg">
-</picture>
 
 ###
