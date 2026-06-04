@@ -1,4 +1,4 @@
-\<h3 align="left">Hey  What's up?</h3>
+<h3 align="left">Hey  What's up?</h3>
 
 ###
 
@@ -10,7 +10,7 @@
 
 ###
 
-<p align="left">✨ Creating bugs since ...<br>📚 I'm currently learning ...<br>🎯 Goals: ...<br>🎲 Fun fact: ...</p>
+<p align="left">AI & Software Innovation<br>- AI & Robotics Hackathon 2025 (with MIT Media Lab) Top th Runner-up.<br>- Play to Build AI Hackathon by SEABW 2026 Top 4th Runner-up (Competing as the youngest and only student developer among professionals)<br>- KMITL ToBeIT69 Top Best App Design for Elderly & Alzheimer’s Patients.<br><br>Web Development & Content<br>- Junior Webmaster Camp 14 Overall Winner, Best Idea, and Best Content.<br><br>Robotics & Hardware<br>- WRC Thailand 2026 (3kg RC Sumo) Top 1st Runner-up & Dubai Global Finals Qualifier.<br>- Maker Robotics Challenge 2026 (1.5kg Sumo) Top 2nd Runner-up & China Finals Qualifier.</p>
 
 ###
 
