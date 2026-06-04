@@ -1,4 +1,4 @@
-ฃ<h3 align="left">Hey  What's up?</h3>
+<h3 align="left">Hey  What's up?</h3>
 
 ###
 
@@ -14,7 +14,7 @@
 
 ###
 
-<h3 align="center">AI & Software Innovation</h3>
+<h3 align="left">AI & Software Innovation</h3>
 
 ###
 
@@ -22,7 +22,7 @@
 
 ###
 
-<h3 align="center">Robotics & Hardware</h3>
+<h3 align="left">Robotics & Hardware</h3>
 
 ###
 
@@ -30,7 +30,7 @@
 
 ###
 
-<h3 align="center">Web Development & Content</h3>
+<h3 align="left">Web Development & Content</h3>
 
 ###
 
@@ -38,11 +38,11 @@
 
 ###
 
-<h2 align="center">AI & Software Development</h2>
+<h2 align="left">AI & Software Development</h2>
 
 ###
 
-<div align="center">
+<div align="left">
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="50" alt="python logo"  />
   <img width="10" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" height="50" alt="cplusplus logo"  />
@@ -68,11 +68,11 @@
 
 ###
 
-<h2 align="center">Robotics, Hardware & IoT</h2>
+<h2 align="left">Robotics, Hardware & IoT</h2>
 
 ###
 
-<div align="center">
+<div align="left">
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" height="50" alt="blender logo"  />
   <img width="10" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" height="50" alt="figma logo"  />
@@ -86,11 +86,11 @@
 
 ###
 
-<h2 align="center">Developer Tools & DevOps</h2>
+<h2 align="left">Developer Tools & DevOps</h2>
 
 ###
 
-<div align="center">
+<div align="left">
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" height="50" alt="vscode logo"  />
   <img width="10" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg" height="50" alt="visualstudio logo"  />
