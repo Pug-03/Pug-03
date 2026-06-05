@@ -26,7 +26,7 @@
 
 ###
 
-<p align="left">- WORLD'S BIGGEST ROBOTICS CHAMPIONSHIP 2026 (3kg RC Sumo) – Top 2 Finalists & Dubai Global Finals Qualifier<br>- Maker Robotics Challenge 2026 (1.5kg Sumo) – Top 3 Finalists & China Finals Qualifier</p>
+<p align="left">- World Robot Championship 2026 (3kg RC Sumo) – Top 2 Finalists & Dubai Global Finals Qualifier<br>- Maker Robotics Challenge 2026 (1.5kg Sumo) – Top 3 Finalists & China Finals Qualifier</p>
 
 ###
 
