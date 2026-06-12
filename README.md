@@ -26,7 +26,7 @@
 
 ###
 
-<p align="left">-  World Robot Championship 2026 (3kg RC Sumo) – Top 2 Finalists & Dubai Global Finals Qualifier<br>- Maker Robotics Challenge 2026 (1.5kg Sumo) – Top 3 Finalists & China Finals Qualifier</p>
+<p align="left">-  World Robot Championship 2026 2026 (3kg RC Sumo) – Top 2 Finalists & Dubai Global Finals Qualifier<br>- Maker Robotics Challenge 2026 (1.5kg Sumo) – Top 3 Finalists & China Finals Qualifier</p>
 
 ###
 
@@ -46,6 +46,8 @@
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="50" alt="python logo"  />
   <img width="10" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" height="50" alt="cplusplus logo"  />
+  <img width="10" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" height="50" alt="csharp logo"  />
   <img width="10" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="50" alt="html5 logo"  />
   <img width="10" />
@@ -67,7 +69,9 @@
   <img width="10" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" height="50" alt="opencv logo"  />
   <img width="10" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" height="50" alt="fastapi logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-original.svg" height="50" alt="godot logo"  />
+  <img width="10" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" height="50" alt="java logo"  />
 </div>
 
 ###
