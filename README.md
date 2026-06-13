@@ -18,7 +18,7 @@
 
 ###
 
-<p align="left">- AI & Robotics Hackathon 2025 By MIT Media Lab – Top 3 Finalists Global Finalists<br>- Play to Build AI Hackathon by SEABW 2026 – Top 4 Finalists (Competing as the youngest and only student developer among professionals)<br>- Thailand Metaverse Hackathon and Exhibition 2026 by Chulalongkorn University (CU) – Top 1st Place Winner<br>- KMITL ToBeIT69 – Top Best App Design for Elderly & Alzheimer’s Patients.</p>
+<p align="left">- AI & Robotics Hackathon 2025 By MIT Media Lab – Top 3 Global Finalist<br>- Play to Build AI Hackathon by SEABW 2026 – Top 4 Finalists (Competing as the youngest and only student developer among professionals)<br>- Thailand Metaverse Hackathon and Exhibition 2026 by Chulalongkorn University (CU) – Top 1st Place Winner<br>- KMITL ToBeIT69 – Top Best App Design for Elderly & Alzheimer’s Patients.</p>
 
 ###
 
