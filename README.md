@@ -32,7 +32,7 @@
 
 ###
 
-<p align="left">-Junior Webmaster Camp 14 – Overall Winner, Best Idea, and Best Content.</p>
+<p align="left">- Junior Webmaster Camp 14 – Overall Winner, Best Idea, and Best Content.</p>
 
 ###
 
