@@ -8,7 +8,7 @@
 
 <h2 align="left">About me</h2>
 
-###<p align="left">🚀 A high school student and developer driven by a passion for exploring the intersection of Artificial Intelligence, Computer Vision, and Robotics. I love building end-to-end innovations that bridge smart software with physical hardware, turning complex engineering ideas into functional, beautiful products.<br><br>- 🔭 I’m currently developing autonomous systems, full-stack web applications, and embedded IoT solutions.<br>- 🌱 Continually expanding my knowledge in advanced machine learning applications and next-gen web frameworks.<br>- 💬 Feel free to reach out if you want to talk about AI models, robotics development, or slick UI design.<br>- ⚡ Fun fact: I have a huge appreciation for Apple-style minimalist layouts and dark-themed developer setups.</p>
+<p align="left">🚀 A high school student and developer driven by a passion for exploring the intersection of Artificial Intelligence, Computer Vision, and Robotics. I love building end-to-end innovations that bridge smart software with physical hardware, turning complex engineering ideas into functional, beautiful products.<br><br>- 🔭 I’m currently developing autonomous systems, full-stack web applications, and embedded IoT solutions.<br>- 🌱 Continually expanding my knowledge in advanced machine learning applications and next-gen web frameworks.<br>- 💬 Feel free to reach out if you want to talk about AI models, robotics development, or slick UI design.<br>- ⚡ Fun fact: I have a huge appreciation for Apple-style minimalist layouts and dark-themed developer setups.</p>
 
 ###
 
