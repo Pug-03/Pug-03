@@ -16,7 +16,7 @@
 
 ###
 
-<p align="left">- AI & Robotics Hackathon 2025 By MIT Media Lab – Top 3 Global Finalist<br>- Play to Build AI Hackathon SEABW 2026 By AWS – Top 4 Finalists (Competing as the youngest and only student developer among professionals)<br>- Thailand Metaverse Hackathon and Exhibition 2026 by Chulalongkorn University (CU) – Top 1st Place Winner<br>- CEDT INNOVATION SUMMIT 2026 - Semifinal Round<br>- KMITL ToBeIT69 – Top Best App Design for Elderly & Alzheimer’s Patients.</p>
+<p align="left">- AI & Robotics Hackathon 2025 By MIT Media Lab – Top 3 Global Finalist.<br>- Play to Build AI Hackathon SEABW 2026 By AWS – Top 4 Finalists (Competing as the youngest and only student developer among professionals).<br>- Thailand Metaverse Hackathon and Exhibition 2026 by Chulalongkorn University (CU) – Top 1st Place Winner.<br>- CEDT INNOVATION SUMMIT 2026 - Semifinal Round<br>- KMITL ToBeIT69 – Top Best App Design for Elderly & Alzheimer’s Patients.</p>
 
 ###
 
@@ -24,7 +24,7 @@
 
 ###
 
-<p align="left">-  World Robot Championship 2026 2026 (3kg RC Sumo) – Top 2 Finalists & Dubai Global Finals Qualifier<br>- Maker Robotics Challenge 2026 (1.5kg Sumo) – Top 3 Finalists & China Finals Qualifier</p>
+<p align="left">- World Robot Championship 2026 2026 (3kg RC Sumo) – Top 2 Finalists & Dubai Global Finals Qualifier.<br>- Maker Robotics Challenge 2026 (1.5kg Sumo) – Top 3 Finalists & China Finals Qualifier.</p>
 
 ###
 
