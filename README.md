@@ -16,7 +16,7 @@
 
 ###
 
-<p align="left">- AI & Robotics Hackathon 2025 By MIT Media Lab – Top 3 Global Finalist.<br>- Play to Build AI Hackathon SEABW 2026 By AWS – Top 4 Finalists (Competing as the youngest and only student developer among professionals).<br>- Thailand Metaverse Hackathon and Exhibition 2026 by Chulalongkorn University (CU) – Top 1st Place Winner.<br>- CEDT INNOVATION SUMMIT 2026 - Semifinal Round<br>- GLO Innovation 2026 - 1st Place Winner Selected from 173 teams <br>- KMITL ToBeIT69 – Top Best App Design for Elderly & Alzheimer’s Patients.</p>
+<p align="left">- AI & Robotics Hackathon 2025 By MIT Media Lab – Top 3 Global Finalist.<br>- Play to Build AI Hackathon SEABW 2026 By AWS – Top 4 Finalists (Competing as the youngest and only student developer among professionals).<br>- CEDT INNOVATION SUMMIT 2026 - Semifinal Round<br>- GLO Innovation 2026 - 1st Place Winner Selected from 173 teams <br>- KMITL ToBeIT69 – Top Best App Design for Elderly & Alzheimer’s Patients.</p>
 
 ###
 
@@ -32,7 +32,7 @@
 
 ###
 
-<p align="left">- Junior Webmaster Camp 14 – Overall Winner, Best Idea, and Best Content.</p>
+<p align="left">- Junior Webmaster Camp 14 – Overall Winner, Best Idea, and Best Content.<br>- Thailand Metaverse Hackathon and Exhibition 2026 by Chulalongkorn University (CU) – Top 1st Place Winner.</p>
 
 ###
 
