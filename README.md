@@ -1,6 +1,4 @@
-<h3 align="left">Hey  What's up?</h3>
 
-###
 
 <p align="left">My name is Nathaporn Saituptim and I'm a Student Developer and Robotics innovator, from Thailand</p>
 
