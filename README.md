@@ -16,7 +16,7 @@
 
 ###
 
-<p align="left">- AI & Robotics Hackathon 2025 By MIT Media Lab – Top 3 Global Finalist.<br>- Play to Build AI Hackathon SEABW 2026 By AWS – Top 4 Finalists (Competing as the youngest and only student developer among professionals).<br>- CEDT INNOVATION SUMMIT 2026 - Semifinal Round<br>- GLO Innovation 2026 - 1st Place Winner Selected from 173 teams <br>- KMITL ToBeIT69 – Top Best App Design for Elderly & Alzheimer’s Patients.</p>
+<p align="left">- AI & Robotics Hackathon 2025 By MIT Media Lab – Top 3 Global Finalist.<br>- Play to Build AI Hackathon SEABW 2026 By AWS – Top 4 Finalists (Competing as the youngest and only student developer among professionals).<br>- CEDT INNOVATION SUMMIT 2026 - Semifinal Round<br>- AI for Thai Service Onboarding - Received the AI for Thai Platform Service Standards Award and ranked in the Top 15 finalists out of 150 teams.<br>- GLO Innovation 2026 - 1st Place Winner Selected from 173 teams <br>- KMITL ToBeIT69 – Top Best App Design for Elderly & Alzheimer’s Patients.</p>
 
 ###
 
