@@ -1,4 +1,6 @@
-<h2 align="left">About me</h2><h3 align="left">Hey  What's up?</h3>
+###
+
+<h3 align="left">Hey  What's up?</h3>
 
 ###
 
