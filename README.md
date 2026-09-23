@@ -1,6 +1,4 @@
-###
 
-<h3 align="left">Hey  What's up?</h3>
 
 ###
 
