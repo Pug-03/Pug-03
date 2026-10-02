@@ -4,7 +4,7 @@
 
 ###
 
-<p align="left">My name is Nathaporn Saituptim and I'm a Student Developer and Robotics innovator, from Thailand</p>
+<p align="left">My name is Nathaporn Saituptim and I'm a Student Developer and Robotics innovator from Thailand</p>
 
 ###
 
@@ -16,7 +16,7 @@
 
 ###
 
-<p align="left">- AI & Robotics Hackathon 2025 By MIT Media Lab – Top 3 Global Finalist.<br>- Play to Build AI Hackathon SEABW 2026 By AWS – Top 4 Finalists | Only solo student vs. Pro teams.<br>- CEDT INNOVATION SUMMIT 2026 - Semifinal Round | Selected from 484 teams.<br>- AI for Thai Service Onboarding - Won the AI for Thai Service Standard Award and made it to the Top 15 (out of 150 teams).<br>- GLO Innovation 2026 - 1st Place Winner Selected from 173 teams. <br>- KMITL ToBeIT'69 – Top Best App Design for Elderly & Alzheimer’s Patients.</p>
+<p align="left">- AI & Robotics Hackathon 2025 By MIT Media Lab – Top 3 Global Finalist.<br>- Play to Build AI Hackathon SEABW 2026 By AWS – Top 4 Finalist | Only solo student vs. Pro teams.<br>- CEDT INNOVATION SUMMIT 2026 - Semifinal Round | Selected from 484 teams.<br>- AI for Thai Service Onboarding - Won the AI for Thai Service Standard Award and made it to the Top 15 (out of 150 teams).<br>- GLO Innovation 2026 - 1st Place Winner | Selected from 173 teams. <br>- KMITL ToBeIT'69 – Top Best App Design for Elderly & Alzheimer’s Patients.</p>
 
 ###
 
@@ -24,7 +24,7 @@
 
 ###
 
-<p align="left">- World Robot Championship 2026 2026 (3kg RC Sumo) – Top 2 Finalists & Dubai Global Finals Qualifier.<br>- Maker Robotics Challenge 2026 (1.5kg Sumo) – Top 3 Finalists & China Finals Qualifier.</p>
+<p align="left">- World Robot Championship 2026 (3kg RC Sumo) – Top 2 Finalists & Dubai Global Finals Qualifier.<br>- Maker Robotics Challenge 2026 (1.5kg Sumo) – Top 3 Finalists & China Finals Qualifier.</p>
 
 ###
 
