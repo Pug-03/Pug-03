@@ -32,7 +32,7 @@
 
 ###
 
-<p align="left">- Junior Webmaster Camp 14 – Overall Winner, Best Idea, and Best Content.<br>- Thailand Metaverse Hackathon and Exhibition 2026 by Chulalongkorn University (CU) – Top 1st Place Winner.</p>
+<p align="left">- Junior Webmaster Camp 14 – Overall Winner, Best Idea, and Best Content.<br>- Thailand Metaverse Hackathon and Exhibition 2026 by Chulalongkorn University – Top 1st Place Winner.</p>
 
 ###
 
