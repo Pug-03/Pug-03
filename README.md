@@ -1,6 +1,6 @@
 ###
 
-<h3 align="left">Hey  What's up?</h3>
+<h3 align="left">Hey 👋 What's up?</h3>
 
 ###
 
@@ -8,7 +8,18 @@
 
 ###
 
-<p align="left">A high school student and developer driven by a passion for exploring the intersection of Artificial Intelligence, Computer Vision, and Robotics. I love building end-to-end innovations that bridge smart software with physical hardware, turning complex engineering ideas into functional, beautiful products.<br><br>- I’m currently developing autonomous systems, full-stack web applications, and embedded IoT solutions.<br>- Continually expanding my knowledge in advanced machine learning applications and next-gen web frameworks.<br>- Feel free to reach out if you want to talk about AI models, robotics development, or slick UI design.<br>- Fun fact: I have a huge appreciation for Apple-style minimalist layouts and dark-themed developer setups.</p>
+<p align="left">
+  🚀 <b>Founder & CEO of <a href="https://deeper.in.th">DeePer</a></b> — a free web app of deep conversation cards for couples, friends & family. 1,050+ curated questions, swipe and take turns answering on one phone. Try it at <a href="https://deeper.in.th">deeper.in.th</a><br>
+  🤝 <b>Working at Yeah Association (สมาคม Yeah)</b>
+</p>
+
+<p align="left">
+  <a href="https://deeper.in.th"><img src="https://img.shields.io/badge/DeePer-deeper.in.th-120a0e?style=for-the-badge&logoColor=white" alt="DeePer" /></a>
+</p>
+
+###
+
+<p align="left">A high school student and developer driven by a passion for exploring the intersection of Artificial Intelligence, Computer Vision, and Robotics. I love building end-to-end innovations that bridge smart software with physical hardware, turning complex engineering ideas into functional, beautiful products.<br><br>- I’m currently building <a href="https://deeper.in.th">DeePer</a> as CEO, alongside autonomous systems, full-stack web applications, and embedded IoT solutions.<br>- Continually expanding my knowledge in advanced machine learning applications and next-gen web frameworks.<br>- Feel free to reach out if you want to talk about AI models, robotics development, startups, or slick UI design.<br>- Fun fact: I have a huge appreciation for Apple-style minimalist layouts and dark-themed developer setups.</p>
 
 ###
 
@@ -115,4 +126,3 @@
 </div>
 
 ###
-
