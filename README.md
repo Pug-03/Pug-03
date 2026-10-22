@@ -1,6 +1,6 @@
 ###
 
-<h3 align="left">Hey 👋 What's up?</h3>
+<h3 align="left">Hey What's up?</h3>
 
 ###
 
@@ -9,8 +9,8 @@
 ###
 
 <p align="left">
-  🚀 <b>Founder & CEO of <a href="https://deeper.in.th">DeePer</a></b> — a free web app of deep conversation cards for couples, friends & family. 1,050+ curated questions, swipe and take turns answering on one phone. Try it at <a href="https://deeper.in.th">deeper.in.th</a><br>
-  🤝 <b>Working at Yeah Association (สมาคม Yeah)</b>
+  <b>Founder & CEO of <a href="https://deeper.in.th">DeePer</a></b> — a free web app of deep conversation cards for couples, friends & family. 1,050+ curated questions, swipe and take turns answering on one phone. Try it at <a href="https://deeper.in.th">deeper.in.th</a><br>
+  <b>Working at Yeah Association </b>
 </p>
 
 <p align="left">
