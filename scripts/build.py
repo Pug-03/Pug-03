@@ -129,6 +129,23 @@ def banner_char():
 
 PILLS = [("MIT Media Lab", "Top 3 Global"), ("World Robot Championship", "Dubai"), ("GLO Innovation", "1st Place")]
 
+def code_lines(cx, cy, ch):
+    """Short blue code lines that rise off the laptop screen and fade, so the banner looks like work in progress."""
+    k = ch / 682                       # main.png is 682px tall; the laptop lid sits around x 350-495, y 180
+    x0, y0 = cx + 330 * k, cy + 165 * k
+    lines = [(0, 26, 0.0), (10, 40, 0.7), (4, 18, 1.4), (16, 32, 2.1), (2, 24, 2.8)]
+    out = '<style>.code{animation:rise 3.5s ease-out infinite;opacity:0}' \
+          '@keyframes rise{0%{opacity:0;transform:translateY(0)}15%{opacity:1}100%{opacity:0;transform:translateY(-90px)}}' \
+          '.breathe{animation:breathe 4.5s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}' \
+          '@keyframes breathe{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.008)}}' \
+          '@media (prefers-reduced-motion: reduce){.code,.breathe{animation:none}}</style>'
+    for dx, w, delay in lines:
+        out += (f'<rect class="code" style="animation-delay:{delay}s" x="{x0 + dx * k * 3:.1f}" y="{y0:.1f}" '
+                f'width="{w * k * 3:.1f}" height="{max(5, 12 * k):.1f}" rx="3" fill="#5ab4ff"/>')
+    out += (f'<text class="code" style="animation-delay:1.75s" x="{x0 + 70 * k:.1f}" y="{y0 - 6:.1f}" '
+            f'font-family="{MONO}" font-size="{max(12, 34 * k):.0f}" font-weight="700" fill="#7cc4ff">&lt;/&gt;</text>')
+    return out
+
 def banner(mobile):
     c, uri = banner_char()
     if not mobile:
@@ -155,7 +172,8 @@ def banner(mobile):
 <radialGradient id="floor"><stop offset="0" stop-color="#6cb6ff" stop-opacity=".20"/><stop offset="1" stop-color="#2997ff" stop-opacity="0"/></radialGradient>
 <ellipse class="pulse" cx="{gx}" cy="{gy}" rx="{ch * 0.79:.0f}" ry="{ch * 0.67:.0f}" fill="url(#g2)"/>
 <ellipse cx="{gx}" cy="{cy + ch - 8}" rx="{ch * 0.73:.0f}" ry="30" fill="url(#floor)"/>
-<image x="{cx}" y="{cy}" width="{cw}" height="{ch}" href="{uri}"/>
+<g class="breathe"><image x="{cx}" y="{cy}" width="{cw}" height="{ch}" href="{uri}"/></g>
+{code_lines(cx, cy, ch)}
 <circle class="blink" cx="{X0 - 2}" cy="64" r="6" fill="{GREEN}"/>
 <text x="{X0 + 16}" y="70" font-family="{MONO}" font-size="{status_size}" font-weight="600" letter-spacing="2.4" fill="{BLUE}">PUG-03 &#183; BANGKOK, TH</text>
 <text font-family="{FONT}" font-size="{name_size}" font-weight="700" letter-spacing="-2.2" fill="#f5f5f7"><tspan x="{X0 - 11}" y="{name_y[0]}">Nathaporn</tspan><tspan x="{X0 - 11}" y="{name_y[1]}" fill="#b4d4ff">Saituptim.</tspan></text>
