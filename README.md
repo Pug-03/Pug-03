@@ -14,8 +14,8 @@ I'm **Nathaporn Saituptim** — a high school student developer and robotics inn
 
 ### AI & Software Innovation
 
-- **1st Place Winner** — GLO Innovation 2026 · selected from 173 teams
 - **Top 3 Global Finalist** — AI & Robotics Hackathon 2025 by MIT Media Lab
+- **1st Place Winner** — GLO Innovation 2026 · selected from 173 teams
 - **Best App Design for Elderly & Alzheimer's Patients** — KMITL ToBeIT'69
 - **Top 4 Finalist** — Play to Build AI Hackathon, SEABW 2026 by AWS · the only solo student against pro teams
 - **Top 5 Finalist** — OIC InsurTech Award 2026 · selected from 501 teams
