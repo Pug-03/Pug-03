@@ -1,4 +1,4 @@
-"""Builds every SVG panel in assets/ and README.md.
+"""Builds every SVG panel in assets/ (desktop) and assets/m/ (phone) plus README.md.
 
 Run from anywhere:  python3 scripts/build.py   (needs Pillow, macOS for SF Pro metrics)
 """
@@ -8,13 +8,27 @@ from PIL import Image, ImageFont, ImageFilter
 
 REPO = Path(__file__).resolve().parent.parent
 SRC = REPO / "scripts" / "src"
+RAW = "https://raw.githubusercontent.com/Pug-03/Pug-03/main"
 FONT = '-apple-system, BlinkMacSystemFont, &quot;SF Pro Display&quot;, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif'
 MONO = 'ui-monospace, &quot;SF Mono&quot;, Menlo, Consolas, monospace'
-BLUE, RED, GREEN = "#2997ff", "#ff375f", "#30d158"
-W = 1200
-X0 = 72                      # left text edge in every panel
-TEXT_W = W - 2 * X0
+BLUE, GREEN = "#2997ff", "#30d158"
 esc = lambda t: html.escape(t, quote=False)
+
+# Desktop panels are 1200 wide and shown at ~850px. Phone panels are 640 wide and shown
+# at ~360px, so their type is set larger relative to the canvas.
+MODES = {
+    "desktop": dict(W=1200, X0=72, dir="assets", eyebrow=17, h=46, body=(24, 37), dp_title=28, dp_desc=(21, 32),
+                    bullet=(23, 35), rank=(24, 32), ev=(20, 28), group=16, label=16, icon=(54, 20), more=(50, 24, 14)),
+    "mobile": dict(W=640, X0=40, dir="assets/m", eyebrow=20, h=42, body=(26, 39), dp_title=28, dp_desc=(23, 34),
+                   bullet=(25, 37), rank=(26, 35), ev=(22, 31), group=19, label=19, icon=(56, 16), more=(56, 20, 7)),
+}
+L = MODES["desktop"]
+W = X0 = TEXT_W = 0
+
+def use(mode):
+    global L, W, X0, TEXT_W
+    L = MODES[mode]; W, X0 = L["W"], L["X0"]; TEXT_W = W - 2 * X0
+    (REPO / L["dir"]).mkdir(parents=True, exist_ok=True)
 
 # --- text measurement (SF Pro), with headroom for wider fonts such as Segoe UI ---
 _fonts = {}
@@ -33,7 +47,7 @@ def wrap(segments, size, width):
     """segments: [(text, style)] where style in {'n','b','hl'} -> list of lines of segments"""
     words = []
     for text, st in segments:
-        for i, w in enumerate(text.split(" ")):
+        for w in text.split(" "):
             if w: words.append((w, st))
     lines, cur, curw = [], [], 0
     for w, st in words:
@@ -45,7 +59,7 @@ def wrap(segments, size, width):
     return lines
 
 def line_svg(line, x, y, size, base="#dcdce1"):
-    out, prev = [], None
+    out = []
     for w, st in line:
         attrs = {"n": f'fill="{base}"', "b": 'fill="#f5f5f7" font-weight="700"',
                  "hl": f'fill="{BLUE}" font-weight="700"'}[st]
@@ -60,9 +74,7 @@ def panel(h, body, glow=(0.85, 0.3), title=""):
 <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#05070c"/><stop offset="1" stop-color="#0b1220"/></linearGradient>
 <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity=".035"/></pattern>
 <radialGradient id="glow"><stop offset="0" stop-color="#2997ff" stop-opacity=".30"/><stop offset=".5" stop-color="#2997ff" stop-opacity=".09"/><stop offset="1" stop-color="#2997ff" stop-opacity="0"/></radialGradient>
-<linearGradient id="name" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f5f5f7"/><stop offset="1" stop-color="#a1c8ff"/></linearGradient>
 <radialGradient id="dotg"><stop offset="0" stop-color="#5ab4ff" stop-opacity=".9"/><stop offset=".35" stop-color="#2997ff" stop-opacity=".45"/><stop offset="1" stop-color="#2997ff" stop-opacity="0"/></radialGradient>
-<linearGradient id="dp" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2997ff"/><stop offset="1" stop-color="#7cc4ff"/></linearGradient>
 <clipPath id="card"><rect width="{W}" height="{h}" rx="28"/></clipPath>
 </defs>
 <style>
@@ -84,100 +96,120 @@ def panel(h, body, glow=(0.85, 0.3), title=""):
 </svg>'''
 
 def eyebrow(y, label, color=BLUE):
-    return f'<text x="{X0}" y="{y}" font-family="{MONO}" font-size="17" letter-spacing="2.4" font-weight="600" fill="{color}">{label}</text>'
+    return f'<text x="{X0}" y="{y}" font-family="{MONO}" font-size="{L["eyebrow"]}" letter-spacing="2.4" font-weight="600" fill="{color}">{label}</text>'
 def heading(y, text):
-    return f'<text x="{X0 - 2}" y="{y}" font-family="{FONT}" font-size="46" font-weight="700" letter-spacing="-1.2" fill="#f5f5f7">{esc(text)}</text>'
+    return f'<text x="{X0 - 2}" y="{y}" font-family="{FONT}" font-size="{L["h"]}" font-weight="700" letter-spacing="-1.2" fill="#f5f5f7">{esc(text)}</text>'
+
+_uris = {}
+def webp_uri(im):
+    b = io.BytesIO(); im.save(b, format="WEBP", lossless=True, method=6)
+    return "data:image/webp;base64," + base64.b64encode(b.getvalue()).decode()
 def mascot(pose, h, x=None, y=None, right=56, bottom=None, ph=None):
     im = Image.open(SRC / "poses" / f"{pose}.png")
     w = round(im.width / im.height * h)
     x = W - right - w if x is None else x
     if bottom is not None: y = ph - bottom - h
-    b = io.BytesIO(); im.save(b, format="WEBP", lossless=True, method=6)
-    uri = "data:image/webp;base64," + base64.b64encode(b.getvalue()).decode()
+    if pose not in _uris: _uris[pose] = webp_uri(im)
     return (f'<ellipse cx="{x + w / 2}" cy="{y + h * 0.55}" rx="{w * 0.75}" ry="{h * 0.6}" fill="url(#glow)"/>'
-            f'<g class="bob"><image x="{x}" y="{y}" width="{w}" height="{h}" href="{uri}"/></g>')
-
-def save(name, svg):
-    open(f"{REPO}/assets/{name}", "w").write(svg)
-    print(name, len(svg) // 1024, "KB")
-
-# ================= banner =================
-c = Image.open(SRC / "poses" / "main.png")
-rgb = c.convert("RGB").filter(ImageFilter.UnsharpMask(radius=1.2, percent=60, threshold=2))
-c = Image.merge("RGBA", (*rgb.split(), c.getchannel("A")))
-buf = io.BytesIO(); c.save(buf, format="WEBP", lossless=True, quality=100, method=6)
-b64 = base64.b64encode(buf.getvalue()).decode()
-H = 380
-ch = 330; cw = round(c.width / c.height * ch); cx = W - cw - 28; cy = H - ch - 14
-gx, gy = cx + cw / 2, cy + ch * 0.42
-
-pills = [("MIT Media Lab", "Top 3 Global", BLUE),
-         ("World Robot Championship", "Dubai", BLUE),
-         ("GLO Innovation", "1st Place", BLUE)]
+            f'<g class="bob"><image x="{x}" y="{y}" width="{w}" height="{h}" href="{_uris[pose]}"/></g>')
 def glow_dot(cx, cy, r=5):
     return (f'<circle class="pulse" cx="{cx}" cy="{cy}" r="{r * 3.4}" fill="url(#dotg)"/>'
             f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="#5ab4ff"/>')
-pill_svg = ""
-for i, (a, b, col) in enumerate(pills):
-    pill_svg += (f'<g transform="translate(476 {118 + i * 52})">' + glow_dot(10, 0) +
-                 f'<text x="30" y="6.5" font-family="{FONT}" font-size="18" font-weight="600" fill="#ffffff">{a}'
-                 f'<tspan fill="#6e6e73"> &#183; </tspan><tspan fill="#d1d1d6" font-weight="500">{b}</tspan></text></g>')
 
-ceo_w = round(tw("Founder & CEO of ", 20, True) + tw("DeePer", 20, True) + 50)
-banner_body = f'''<radialGradient id="g2"><stop offset="0" stop-color="#2997ff" stop-opacity=".45"/><stop offset=".5" stop-color="#2997ff" stop-opacity=".14"/><stop offset="1" stop-color="#2997ff" stop-opacity="0"/></radialGradient>
+def save(name, svg):
+    (REPO / L["dir"] / name).write_text(svg)
+    print(f'{L["dir"]}/{name}', len(svg) // 1024, "KB")
+
+# ================= banner =================
+def banner_char():
+    c = Image.open(SRC / "poses" / "main.png")
+    rgb = c.convert("RGB").filter(ImageFilter.UnsharpMask(radius=1.2, percent=60, threshold=2))
+    c = Image.merge("RGBA", (*rgb.split(), c.getchannel("A")))
+    return c, webp_uri(c)
+
+PILLS = [("MIT Media Lab", "Top 3 Global"), ("World Robot Championship", "Dubai"), ("GLO Innovation", "1st Place")]
+
+def banner(mobile):
+    c, uri = banner_char()
+    if not mobile:
+        H, ch, px, py, pgap, psize = 380, 330, 476, 118, 52, 18
+        name_size, name_y, tag = 68, (148, 216), (264, 27)
+        ceo_y, ceo_size, status_size = 288, 20, 18
+    else:
+        H, ch, px, py, pgap, psize = 520, 220, X0, 368, 50, 22
+        name_size, name_y, tag = 64, (138, 202), (250, 26)
+        ceo_y, ceo_size, status_size = 272, 22, 20
+    cw = round(c.width / c.height * ch)
+    cx, cy = W - cw - (28 if not mobile else 16), H - ch - 14
+    gx, gy = cx + cw / 2, cy + ch * 0.42
+    pill_svg = "".join(
+        f'<g transform="translate({px} {py + i * pgap})">' + glow_dot(10, 0) +
+        f'<text x="30" y="{psize * 0.36:.1f}" font-family="{FONT}" font-size="{psize}" font-weight="600" fill="#ffffff">{a}'
+        f'<tspan fill="#6e6e73"> &#183; </tspan><tspan fill="#d1d1d6" font-weight="500">{b}</tspan></text></g>'
+        for i, (a, b) in enumerate(PILLS))
+    ceo_w = round(tw("Founder & CEO of ", ceo_size, True) + tw("DeePer", ceo_size, True) + 50)
+    ceo_h = round(ceo_size * 2.6)
+    link = ("" if mobile else
+            f'<text x="{62 + ceo_w + 16}" y="{ceo_y + 32}" font-family="{MONO}" font-size="17" font-weight="600" letter-spacing="1" fill="#a1c8ff">deeper.in.th</text>')
+    body = f'''<radialGradient id="g2"><stop offset="0" stop-color="#2997ff" stop-opacity=".45"/><stop offset=".5" stop-color="#2997ff" stop-opacity=".14"/><stop offset="1" stop-color="#2997ff" stop-opacity="0"/></radialGradient>
 <radialGradient id="floor"><stop offset="0" stop-color="#6cb6ff" stop-opacity=".20"/><stop offset="1" stop-color="#2997ff" stop-opacity="0"/></radialGradient>
-<ellipse class="pulse" cx="{gx}" cy="{gy}" rx="260" ry="220" fill="url(#g2)"/>
-<ellipse cx="{gx}" cy="{cy + ch - 8}" rx="240" ry="30" fill="url(#floor)"/>
-<image x="{cx}" y="{cy}" width="{cw}" height="{ch}" href="data:image/webp;base64,{b64}"/>
-<circle class="blink" cx="70" cy="64" r="6" fill="{GREEN}"/>
-<text x="88" y="70" font-family="{MONO}" font-size="18" font-weight="600" letter-spacing="2.4" fill="{BLUE}">PUG-03 &#183; BANGKOK, TH</text>
-<text font-family="{FONT}" font-size="68" font-weight="700" letter-spacing="-2.2" fill="#f5f5f7"><tspan x="61" y="148">Nathaporn</tspan><tspan x="61" y="216" fill="#b4d4ff">Saituptim.</tspan></text>
-<text x="64" y="264" font-family="{FONT}" font-size="27" font-weight="700" fill="#ffffff">AI. Computer Vision. Robotics.</text>
-<g transform="translate(62 288)">
-<rect width="{ceo_w}" height="52" rx="26" fill="#2997ff" fill-opacity=".14" stroke="#2997ff" stroke-opacity=".55"/>
-{glow_dot(25, 26, 5.5)}
-<text x="42" y="33" font-family="{FONT}" font-size="20" font-weight="700" fill="#ffffff">Founder &amp; CEO of <tspan fill="#4aa8ff" font-weight="800">DeePer</tspan></text>
+<ellipse class="pulse" cx="{gx}" cy="{gy}" rx="{ch * 0.79:.0f}" ry="{ch * 0.67:.0f}" fill="url(#g2)"/>
+<ellipse cx="{gx}" cy="{cy + ch - 8}" rx="{ch * 0.73:.0f}" ry="30" fill="url(#floor)"/>
+<image x="{cx}" y="{cy}" width="{cw}" height="{ch}" href="{uri}"/>
+<circle class="blink" cx="{X0 - 2}" cy="64" r="6" fill="{GREEN}"/>
+<text x="{X0 + 16}" y="70" font-family="{MONO}" font-size="{status_size}" font-weight="600" letter-spacing="2.4" fill="{BLUE}">PUG-03 &#183; BANGKOK, TH</text>
+<text font-family="{FONT}" font-size="{name_size}" font-weight="700" letter-spacing="-2.2" fill="#f5f5f7"><tspan x="{X0 - 11}" y="{name_y[0]}">Nathaporn</tspan><tspan x="{X0 - 11}" y="{name_y[1]}" fill="#b4d4ff">Saituptim.</tspan></text>
+<text x="{X0 - 8}" y="{tag[0]}" font-family="{FONT}" font-size="{tag[1]}" font-weight="700" fill="#ffffff">AI. Computer Vision. Robotics.</text>
+<g transform="translate({X0 - 10} {ceo_y})">
+<rect width="{ceo_w}" height="{ceo_h}" rx="{ceo_h / 2}" fill="#2997ff" fill-opacity=".14" stroke="#2997ff" stroke-opacity=".55"/>
+{glow_dot(25, ceo_h / 2, 5.5)}
+<text x="42" y="{ceo_h / 2 + ceo_size * 0.35:.1f}" font-family="{FONT}" font-size="{ceo_size}" font-weight="700" fill="#ffffff">Founder &amp; CEO of <tspan fill="#4aa8ff" font-weight="800">DeePer</tspan></text>
 </g>
-<text x="{62 + ceo_w + 16}" y="320" font-family="{MONO}" font-size="17" font-weight="600" letter-spacing="1" fill="#a1c8ff">deeper.in.th</text>
+{link}
 {pill_svg}'''
-save("banner.svg", panel(H, banner_body, glow=(0.3, 0.2), title="Nathaporn Saituptim"))
+    save("banner.svg", panel(H, body, glow=(0.3, 0.2), title="Nathaporn Saituptim"))
 
 # ================= about =================
-y = 72
-body = eyebrow(y, "ABOUT ME"); y += 52
-body += heading(y, "Hey, what's up?"); y += 58
-para = [("I'm", "n"), ("Nathaporn Saituptim", "b"),
-        ("— a high school student developer and robotics innovator from Thailand. I build end-to-end products that bridge smart software with physical hardware: AI and computer vision, autonomous robots, full-stack web apps, and embedded IoT.", "n")]
-for ln in wrap(para, 24, TEXT_W):
-    body += line_svg(ln, X0, y, 24); y += 37
-y += 26
-# DeePer highlight block
-deeper = [("A free web app of deep conversation cards for couples, friends & family. 1,050+ curated questions, swipe and take turns on one phone.", "n")]
-dl = wrap(deeper, 21, TEXT_W - 56)
-bh = 82 + len(dl) * 32
-body += (f'<rect x="{X0}" y="{y}" width="{TEXT_W}" height="{bh}" rx="20" fill="#2997ff" fill-opacity=".08" stroke="#2997ff" stroke-opacity=".35"/>'
-         f'<text x="{X0 + 28}" y="{y + 44}" font-family="{FONT}" font-size="28" font-weight="700" fill="#ffffff">Founder &amp; CEO of <tspan fill="#4aa8ff">DeePer</tspan></text>'
-         f'<text x="{X0 + TEXT_W - 28}" y="{y + 43}" text-anchor="end" font-family="{MONO}" font-size="18" font-weight="600" letter-spacing="1" fill="{BLUE}">deeper.in.th</text>')
-yy = y + 84
-for ln in dl:
-    body += line_svg(ln, X0 + 28, yy, 21); yy += 32
-y += bh + 40
-bullets = [[("Working at", "n"), ("Yeah Association", "b")],
-           [("Currently building autonomous systems, full-stack web apps, and embedded IoT solutions", "n")],
-           [("Ask me about AI models, robotics, startups, or slick UI design", "n")],
-           [("Fun fact: I love Apple-style minimalist layouts and dark-themed dev setups", "n")]]
-for b in bullets:
-    body += f'<circle cx="{X0 + 6}" cy="{y - 7}" r="4" fill="{BLUE}"/>'
-    for ln in wrap(b, 23, TEXT_W - 30):
-        body += line_svg(ln, X0 + 26, y, 23); y += 35
-    y += 10
-ah = y + 30
-body += mascot("happy", 150, bottom=22, ph=ah)
-save("about.svg", panel(ah, body, glow=(0.9, 0.15), title="About me"))
+def about(mobile):
+    y = 72
+    body = eyebrow(y, "ABOUT ME"); y += 52
+    body += heading(y, "Hey, what's up?"); y += 58
+    para = [("I'm", "n"), ("Nathaporn Saituptim", "b"),
+            ("— a high school student developer and robotics innovator from Thailand. I build end-to-end products that bridge smart software with physical hardware: AI and computer vision, autonomous robots, full-stack web apps, and embedded IoT.", "n")]
+    size, lh = L["body"]
+    for ln in wrap(para, size, TEXT_W):
+        body += line_svg(ln, X0, y, size); y += lh
+    y += 26
+    deeper = [("A free web app of deep conversation cards for couples, friends & family. 1,050+ curated questions, swipe and take turns on one phone.", "n")]
+    dsize, dlh = L["dp_desc"]
+    dl = wrap(deeper, dsize, TEXT_W - 56)
+    top = 84 if not mobile else 118
+    bh = top - 2 + len(dl) * dlh
+    link_x, link_y, anchor = (X0 + TEXT_W - 28, y + 43, "end") if not mobile else (X0 + 28, y + 80, "start")
+    body += (f'<rect x="{X0}" y="{y}" width="{TEXT_W}" height="{bh}" rx="20" fill="#2997ff" fill-opacity=".08" stroke="#2997ff" stroke-opacity=".35"/>'
+             f'<text x="{X0 + 28}" y="{y + 44}" font-family="{FONT}" font-size="{L["dp_title"]}" font-weight="700" fill="#ffffff">Founder &amp; CEO of <tspan fill="#4aa8ff">DeePer</tspan></text>'
+             f'<text x="{link_x}" y="{link_y}" text-anchor="{anchor}" font-family="{MONO}" font-size="18" font-weight="600" letter-spacing="1" fill="{BLUE}">deeper.in.th</text>')
+    yy = y + top
+    for ln in dl:
+        body += line_svg(ln, X0 + 28, yy, dsize); yy += dlh
+    y += bh + 40
+    bullets = [[("Working at", "n"), ("Yeah Association", "b")],
+               [("Currently building autonomous systems, full-stack web apps, and embedded IoT solutions", "n")],
+               [("Ask me about AI models, robotics, startups, or slick UI design", "n")],
+               [("Fun fact: I love Apple-style minimalist layouts and dark-themed dev setups", "n")]]
+    bsize, blh = L["bullet"]
+    for b in bullets:
+        body += f'<circle cx="{X0 + 6}" cy="{y - 7}" r="4" fill="{BLUE}"/>'
+        for ln in wrap(b, bsize, TEXT_W - 30):
+            body += line_svg(ln, X0 + 26, y, bsize); y += blh
+        y += 10
+    ah = y + 30
+    body += mascot("happy", 150, bottom=22, ph=ah) if not mobile else mascot("happy", 110, y=26, right=28)
+    save("about.svg", panel(ah, body, glow=(0.9, 0.15), title="About me"))
 
 # ================= awards =================
-groups = {
-    "ai": ("AI &amp; SOFTWARE INNOVATION", BLUE, [
+GROUPS = [
+    ("AI &amp; SOFTWARE INNOVATION", [
         ("Top 3 Global Finalist", "AI & Robotics Hackathon 2025 by MIT Media Lab"),
         ("1st Place Winner", "GLO Innovation 2026 · selected from 173 teams"),
         ("Best App Design for Elderly & Alzheimer's Patients", "KMITL ToBeIT'69"),
@@ -185,109 +217,119 @@ groups = {
         ("Top 5 Finalist", "OIC InsurTech Award 2026 · selected from 501 teams"),
         ("AI for Thai Service Standard Award · Top 15", "AI for Thai Service Onboarding · out of 150 teams"),
         ("Semifinalist", "CEDT Innovation Summit 2026 · selected from 484 teams")]),
-    "rb": ("ROBOTICS &amp; HARDWARE", BLUE, [
+    ("ROBOTICS &amp; HARDWARE", [
         ("Top 2 Finalist · Dubai Global Finals Qualifier", "World Robot Championship 2026 (3kg RC Sumo)"),
         ("Top 3 Finalist · China Finals Qualifier", "Maker Robotics Challenge 2026 (1.5kg Sumo)")]),
-    "web": ("WEB DEVELOPMENT &amp; CONTENT", BLUE, [
+    ("WEB DEVELOPMENT &amp; CONTENT", [
         ("1st Place Winner", "Thailand Metaverse Hackathon & Exhibition 2026 by Chulalongkorn University"),
         ("Overall Winner · Best Idea · Best Content", "Junior Webmaster Camp 14")]),
-}
-def column(keys, x, width, y):
+]
+def awards(mobile):
+    rsize, rlh = L["rank"]; esize, elh = L["ev"]
+    x, width, y = X0, TEXT_W, 190
     out = ""
-    for k in keys:
-        label, col, items = groups[k]
-        out += (f'<circle cx="{x + 5}" cy="{y - 5}" r="5" fill="{col}"/>'
-                f'<text x="{x + 20}" y="{y}" font-family="{MONO}" font-size="16" font-weight="600" letter-spacing="2" fill="{col}">{label}</text>')
+    for label, items in GROUPS:
+        out += (f'<circle cx="{x + 5}" cy="{y - 5}" r="5" fill="{BLUE}"/>'
+                f'<text x="{x + 20}" y="{y}" font-family="{MONO}" font-size="{L["group"]}" font-weight="600" letter-spacing="2" fill="{BLUE}">{label}</text>')
         y += 40
         for rank, ev in items:
             top = y - 22
-            for ln in wrap([(rank, "b")], 24, width - 22):
-                out += line_svg(ln, x + 22, y, 24); y += 32
-            for ln in wrap([(ev, "n")], 20, width - 22):
-                out += line_svg(ln, x + 22, y, 20, "#c7c7cc"); y += 28
-            out += f'<rect x="{x}" y="{top}" width="3" height="{y - top - 14}" rx="1.5" fill="{col}" fill-opacity=".7"/>'
+            for ln in wrap([(rank, "b")], rsize, width - 22):
+                out += line_svg(ln, x + 22, y, rsize); y += rlh
+            for ln in wrap([(ev, "n")], esize, width - 22):
+                out += line_svg(ln, x + 22, y, esize, "#c7c7cc"); y += elh
+            out += f'<rect x="{x}" y="{top}" width="3" height="{y - top - 14}" rx="1.5" fill="{BLUE}" fill-opacity=".7"/>'
             y += 18
         y += 22
-    return out, y
-y0 = 72
-head = eyebrow(y0, "TRACK RECORD") + heading(y0 + 52, "Awards & Achievements")
-start = y0 + 118
-colw = (TEXT_W - 64) / 2
-left, ly = column(["ai", "rb", "web"], X0, TEXT_W, start)
-head += mascot("stretch", 170, y=26)
-head += mascot("o_hoodie", 200, y=round(ly * 0.42), right=80)
-head += mascot("drink", 150, bottom=24, ph=ly + 10)
-save("awards.svg", panel(ly + 10, head + left, glow=(0.15, 0.1), title="Awards and Achievements"))
+    h = y + 10
+    head = eyebrow(72, "TRACK RECORD") + heading(124, "Awards & Achievements")
+    if not mobile:
+        head += mascot("stretch", 170, y=26)
+        head += mascot("o_hoodie", 200, y=round(y * 0.42), right=80)
+        head += mascot("drink", 150, bottom=24, ph=h)
+    else:
+        head += mascot("stretch", 120, y=18, right=24)
+    save("awards.svg", panel(h, head + out, glow=(0.15, 0.1), title="Awards and Achievements"))
 
 # ================= tech stack =================
 def icon_uri(n):
     if n == "xcode":
-        return "data:image/png;base64," + base64.b64encode(open(f"{REPO}/assets/xcode.png", "rb").read()).decode()
-    return "data:image/svg+xml;base64," + base64.b64encode(open(SRC / "icons" / f"{n}.svg", "rb").read()).decode()
+        return "data:image/png;base64," + base64.b64encode((REPO / "assets" / "xcode.png").read_bytes()).decode()
+    return "data:image/svg+xml;base64," + base64.b64encode((SRC / "icons" / f"{n}.svg").read_bytes()).decode()
 def icon(n, x, y, s):
     return f'<image x="{x}" y="{y}" width="{s}" height="{s}" href="{icon_uri(n)}"><title>{n}</title></image>'
 
-main = [
+MAIN = [
     ("LANGUAGES", "python c cplusplus csharp typescript javascript swift html5 css3"),
     ("WEB &amp; BACKEND", "react nextjs tailwindcss vitejs nodejs express fastapi postgresql supabase mongodb"),
     ("AI &amp; VISION", "opencv ultralytics pytorch tensorflow claude googlegemini"),
     ("ROBOTICS &amp; HARDWARE", "arduino raspberrypi espressif fusion blender unity"),
     ("TOOLS &amp; CLOUD", "git github docker amazonwebservices cloudflare vercel vscode xcode figma"),
 ]
-more = ("java kotlin dart go php solidity vuejs astro flutter expo socketio twilio mysql sqlite prisma keras numpy "
+MORE = ("java kotlin dart go php solidity vuejs astro flutter expo socketio twilio mysql sqlite prisma keras numpy "
         "huggingface jupyter googlecolab kaggle anthropic githubcopilot antigravity ollama perplexity v0 replit embeddedc "
         "nvidia mqtt autodesk tinkercad matlab unrealengine googlecloud azure cloudflareworkers netlify render digitalocean "
         "gitlab githubactions visualstudio cursor androidstudio apple playwright vitest esbuild npm bash notion trello slack").split()
-assert sum(len(s.split()) for _, s in main) == 40 and len(more) == 55
+assert sum(len(s.split()) for _, s in MAIN) == 40 and len(MORE) == 55
 
-y = 72
-body = eyebrow(y, "WHAT I BUILD WITH") + heading(y + 52, "Tech Stack")
-y += 110
-IS, GAP, LABEL_W = 54, 20, 290
-for i, (label, names) in enumerate(main):
-    if i: body += f'<line x1="{X0}" y1="{y - 16}" x2="{W - X0}" y2="{y - 16}" stroke="#fff" stroke-opacity=".06"/>'
-    body += f'<text x="{X0}" y="{y + IS / 2 + 5}" font-family="{MONO}" font-size="16" font-weight="600" letter-spacing="2" fill="#dcdce1">{label}</text>'
-    for j, n in enumerate(names.split()):
-        body += icon(n, X0 + LABEL_W + j * (IS + GAP), y, IS)
-    y += IS + 34
-body += mascot("think", 150, y=22)
-save("stack.svg", panel(y + 6, body, glow=(0.9, 0.9), title="Tech Stack"))
+def stack(mobile):
+    y = 72
+    body = eyebrow(y, "WHAT I BUILD WITH") + heading(y + 52, "Tech Stack")
+    y += 110
+    IS, GAP = L["icon"]
+    for i, (label, names) in enumerate(MAIN):
+        names = names.split()
+        if i: body += f'<line x1="{X0}" y1="{y - 16}" x2="{W - X0}" y2="{y - 16}" stroke="#fff" stroke-opacity=".06"/>'
+        lab = f'font-family="{MONO}" font-size="{L["label"]}" font-weight="600" letter-spacing="2" fill="#dcdce1">{label}</text>'
+        if not mobile:
+            body += f'<text x="{X0}" y="{y + IS / 2 + 5}" ' + lab
+            for j, n in enumerate(names):
+                body += icon(n, X0 + 290 + j * (IS + GAP), y, IS)
+            y += IS + 34
+        else:
+            body += f'<text x="{X0}" y="{y + 10}" ' + lab
+            y += 30
+            per = (TEXT_W + GAP) // (IS + GAP)
+            for j, n in enumerate(names):
+                body += icon(n, X0 + (j % per) * (IS + GAP), y + (j // per) * (IS + GAP), IS)
+            y += ((len(names) - 1) // per + 1) * (IS + GAP) + 30
+    body += mascot("think", 150, y=22) if not mobile else mascot("think", 110, y=22, right=24)
+    save("stack.svg", panel(y + 6, body, glow=(0.9, 0.9), title="Tech Stack"))
 
-PER, IS2, GAP2 = 14, 50, 24
-rows = [more[i:i + PER] for i in range(0, len(more), PER)]
-y = 72
-body = eyebrow(y, "55 MORE") + heading(y + 52, "Tools I've worked with") + mascot("type1", 140, y=26)
-y += 120
-for r in rows:
-    x = (W - (len(r) * IS2 + (len(r) - 1) * GAP2)) / 2
-    for j, n in enumerate(r):
-        body += icon(n, x + j * (IS2 + GAP2), y, IS2)
-    y += IS2 + GAP2
-save("stack-more.svg", panel(y + 30, body, glow=(0.5, 0.5), title="More tools"))
+def stack_more(mobile):
+    IS2, GAP2, PER = L["more"]
+    rows = [MORE[i:i + PER] for i in range(0, len(MORE), PER)]
+    y = 72
+    title = "Tools I've worked with" if not mobile else "More tools"
+    body = eyebrow(y, "55 MORE") + heading(y + 52, title)
+    body += mascot("type1", 140, y=26) if not mobile else mascot("type1", 110, y=22, right=24)
+    y += 120
+    for r in rows:
+        x = (W - (len(r) * IS2 + (len(r) - 1) * GAP2)) / 2
+        for j, n in enumerate(r):
+            body += icon(n, x + j * (IS2 + GAP2), y, IS2)
+        y += IS2 + GAP2
+    save("stack-more.svg", panel(y + 30, body, glow=(0.5, 0.5), title="More tools"))
+
+for mode in MODES:
+    use(mode)
+    m = mode == "mobile"
+    banner(m); about(m); awards(m); stack(m); stack_more(m)
 
 # ================= README =================
-readme = '''<p align="center">
-  <img src="assets/banner.svg" width="100%" alt="Nathaporn Saituptim - AI, Computer Vision, Robotics. Founder & CEO of DeePer" />
-</p>
+def pic(name, alt, link=None):
+    """Desktop panel by default; the phone panel when the viewport is narrow."""
+    img = (f'<picture>\n    <source media="(max-width: 700px)" srcset="{RAW}/assets/m/{name}" />\n'
+           f'    <img src="assets/{name}" width="100%" alt="{alt}" />\n  </picture>')
+    if link: img = f'<a href="{link}">\n  {img}\n  </a>'
+    return f'<p align="center">\n  {img}\n</p>\n'
 
-<p align="center">
-  <a href="https://deeper.in.th"><img src="assets/about.svg" width="100%" alt="Hey, what's up? I'm Nathaporn Saituptim, a high school student developer and robotics innovator from Thailand. Founder & CEO of DeePer (deeper.in.th). Working at Yeah Association." /></a>
-</p>
-
-<p align="center">
-  <img src="assets/awards.svg" width="100%" alt="Awards and Achievements" />
-</p>
-
-<p align="center">
-  <img src="assets/stack.svg" width="100%" alt="Tech Stack: Python, C, C++, C#, TypeScript, JavaScript, Swift, React, Next.js, FastAPI, OpenCV, YOLO, PyTorch, TensorFlow, Arduino, Raspberry Pi, ESP32, Docker, AWS and more" />
-</p>
-
-<details>
-<summary><b>More tools I've worked with (55)</b></summary>
-<br />
-<p align="center">
-  <img src="assets/stack-more.svg" width="100%" alt="More tools I've worked with" />
-</p>
-</details>
-'''
-open(f"{REPO}/README.md", "w").write(readme)
+readme = "\n".join([
+    pic("banner.svg", "Nathaporn Saituptim - AI, Computer Vision, Robotics. Founder &amp; CEO of DeePer"),
+    pic("about.svg", "Hey, what's up? I'm Nathaporn Saituptim, a high school student developer and robotics innovator from Thailand. Founder &amp; CEO of DeePer (deeper.in.th). Working at Yeah Association.", "https://deeper.in.th"),
+    pic("awards.svg", "Awards and Achievements"),
+    pic("stack.svg", "Tech Stack: Python, C, C++, C#, TypeScript, JavaScript, Swift, React, Next.js, FastAPI, OpenCV, YOLO, PyTorch, TensorFlow, Arduino, Raspberry Pi, ESP32, Docker, AWS and more"),
+    "<details>\n<summary><b>More tools I've worked with (55)</b></summary>\n<br />\n",
+    pic("stack-more.svg", "More tools I've worked with") + "</details>\n",
+])
+(REPO / "README.md").write_text(readme)
