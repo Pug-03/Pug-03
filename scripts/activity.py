@@ -61,7 +61,7 @@ def next_event(today):
 
 def event_strip(ev, today, x, y, w, mobile):
     name, start, end = ev
-    when = (f"{start.day}–{end.day} {end.strftime('%b %Y')}" if start.month == end.month and start != end
+    when = (f"{start.day}–{end.day} {end.strftime('%b %Y')}" if (start.year, start.month) == (end.year, end.month) and start != end
             else start.strftime("%-d %b %Y") + (" – " + end.strftime("%-d %b %Y") if end != start else ""))
     days = (start - today).days
     big = "HAPPENING NOW" if days <= 0 else ("TOMORROW" if days == 1 else f"IN {days} DAYS")
