@@ -1,8 +1,8 @@
-name: Daily activity panel
+name: Activity panel
 
 on:
   schedule:
-    - cron: "5 17 * * *"   # 00:05 in Bangkok
+    - cron: "*/5 * * * *"   # GitHub's shortest interval; runs can start a few minutes late
   workflow_dispatch:
   push:
     branches: [main]

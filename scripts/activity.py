@@ -53,7 +53,8 @@ def render(total, weeks, mobile):
     shown = weeks[-19:] if mobile else weeks
     cell, gap = (24, 5) if mobile else (16, 4)
     pose = POSES[dt.date.fromisoformat(days[-1][0]).weekday()]
-    today = dt.date.fromisoformat(days[-1][0]).strftime("%-d %b %Y").upper()
+    bkk = dt.datetime.now(dt.timezone(dt.timedelta(hours=7)))
+    today = bkk.strftime("%-d %b %H:%M").upper() + " BKK"
 
     y = 72
     body = (f'<text x="{X0}" y="{y}" font-family="{MONO}" font-size="{20 if mobile else 17}" font-weight="600" letter-spacing="2.4" fill="{BLUE}">'
