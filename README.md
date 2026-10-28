@@ -33,7 +33,7 @@
 <p align="center">
   <picture>
     <source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Pug-03/Pug-03/output/activity-m.svg" />
-    <img src="https://raw.githubusercontent.com/Pug-03/Pug-03/output/activity.svg" width="100%" alt="GitHub activity over the last 12 months, updated daily" />
+    <img src="https://raw.githubusercontent.com/Pug-03/Pug-03/output/activity.svg" width="100%" alt="GitHub activity over the last 12 months, refreshed every few minutes" />
   </picture>
 </p>
 
