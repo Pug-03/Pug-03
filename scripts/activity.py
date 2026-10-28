@@ -40,6 +40,38 @@ def streaks(days):
         cur += 1; i -= 1
     return cur, best
 
+def next_event(today):
+    """Nearest event that has not ended yet, from scripts/src/events.txt."""
+    best = None
+    for line in (SRC / "events.txt").read_text().splitlines():
+        if not line.strip() or line.startswith("#"): continue
+        parts = [p.strip() for p in line.split("|")]
+        start = dt.date.fromisoformat(parts[1])
+        end = dt.date.fromisoformat(parts[2]) if len(parts) > 2 and parts[2] else start
+        if end >= today and (best is None or start < best[1]):
+            best = (parts[0], start, end)
+    return best
+
+def event_strip(ev, today, x, y, w, mobile):
+    name, start, end = ev
+    when = (f"{start.day}–{end.day} {end.strftime('%b %Y')}" if start.month == end.month and start != end
+            else start.strftime("%-d %b %Y") + (" – " + end.strftime("%-d %b %Y") if end != start else ""))
+    days = (start - today).days
+    big = "HAPPENING NOW" if days <= 0 else ("TOMORROW" if days == 1 else f"IN {days} DAYS")
+    h = 112 if mobile else 72
+    out = (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{36 if not mobile else 28}" fill="#2997ff" fill-opacity=".10" stroke="#2997ff" stroke-opacity=".45"/>'
+           f'<circle class="pulse" cx="{x + 34}" cy="{y + 36}" r="19" fill="url(#dotg)"/><circle cx="{x + 34}" cy="{y + 36}" r="5.5" fill="#5ab4ff"/>')
+    if not mobile:
+        out += (f'<text x="{x + 58}" y="{y + 42}" font-family="{MONO}" font-size="15" font-weight="700" letter-spacing="2" fill="{BLUE}">NEXT UP</text>'
+                f'<text x="{x + 160}" y="{y + 44}" font-family="{FONT}" font-size="24" font-weight="700" fill="#ffffff">{name}'
+                f'<tspan fill="#c7c7cc" font-weight="500"> &#183; {when}</tspan></text>'
+                f'<text x="{x + w - 32}" y="{y + 46}" text-anchor="end" font-family="{FONT}" font-size="30" font-weight="800" letter-spacing="-.5" fill="#4aa8ff">{big}</text>')
+    else:
+        out += (f'<text x="{x + 58}" y="{y + 42}" font-family="{MONO}" font-size="18" font-weight="700" letter-spacing="2" fill="{BLUE}">NEXT UP &#183; {big}</text>'
+                f'<text x="{x + 30}" y="{y + 84}" font-family="{FONT}" font-size="25" font-weight="700" fill="#ffffff">{name}'
+                f'<tspan fill="#c7c7cc" font-weight="500"> &#183; {when}</tspan></text>')
+    return out, h
+
 def mascot(pose, x, y, h):
     uri = "data:image/png;base64," + base64.b64encode((SRC / "poses" / f"{pose}.png").read_bytes()).decode()
     return (f'<ellipse cx="{x + h * 0.42}" cy="{y + h * 0.55}" rx="{h * 0.65}" ry="{h * 0.6}" fill="url(#glow)"/>'
@@ -70,6 +102,10 @@ def render(total, weeks, mobile):
         body += (f'<text x="{sx}" y="{sy}" font-family="{FONT}" font-size="{44 if mobile else 48}" font-weight="700" letter-spacing="-1" fill="#ffffff">{v}</text>'
                  f'<text x="{sx}" y="{sy + 30}" font-family="{MONO}" font-size="{18 if mobile else 15}" font-weight="600" letter-spacing="1.6" fill="#c7c7cc">{label.upper()}</text>')
     y += (184 if mobile else 100) + 20
+    ev = next_event(bkk.date())
+    if ev:
+        strip, sh = event_strip(ev, bkk.date(), X0, y, W - 2 * X0, mobile)
+        body += strip; y += sh + 36
     for wi, w in enumerate(shown):
         for d in w:
             di = dt.date.fromisoformat(d[0]).weekday()        # Mon=0
@@ -83,13 +119,16 @@ def render(total, weeks, mobile):
 <defs>
 <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#05070c"/><stop offset="1" stop-color="#0b1220"/></linearGradient>
 <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity=".035"/></pattern>
+<radialGradient id="dotg"><stop offset="0" stop-color="#5ab4ff" stop-opacity=".9"/><stop offset=".35" stop-color="#2997ff" stop-opacity=".45"/><stop offset="1" stop-color="#2997ff" stop-opacity="0"/></radialGradient>
 <radialGradient id="glow"><stop offset="0" stop-color="#2997ff" stop-opacity=".30"/><stop offset=".5" stop-color="#2997ff" stop-opacity=".09"/><stop offset="1" stop-color="#2997ff" stop-opacity="0"/></radialGradient>
 <clipPath id="card"><rect width="{W}" height="{y}" rx="28"/></clipPath>
 </defs>
 <style>
 .bob{{animation:bob 4s ease-in-out infinite}}
 @keyframes bob{{0%,100%{{transform:translateY(0)}}50%{{transform:translateY(-5px)}}}}
-@media (prefers-reduced-motion: reduce){{.bob{{animation:none}}}}
+.pulse{{animation:pulse 6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}}
+@keyframes pulse{{0%,100%{{opacity:.7;transform:scale(1)}}50%{{opacity:1;transform:scale(1.07)}}}}
+@media (prefers-reduced-motion: reduce){{.bob,.pulse{{animation:none}}}}
 </style>
 <g clip-path="url(#card)">
 <rect width="{W}" height="{y}" fill="url(#bg)"/>

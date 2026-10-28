@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [scripts/activity.py, scripts/src/poses/**, .github/workflows/daily.yml]
+    paths: [scripts/activity.py, scripts/src/events.txt, scripts/src/poses/**, .github/workflows/daily.yml]
 
 permissions:
   contents: write
