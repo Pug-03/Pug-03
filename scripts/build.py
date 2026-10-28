@@ -20,7 +20,7 @@ MODES = {
     "desktop": dict(W=1200, X0=72, dir="assets", eyebrow=17, h=46, body=(24, 37), dp_title=28, dp_desc=(21, 32),
                     bullet=(23, 35), rank=(24, 32), ev=(20, 28), group=16, label=16, icon=(54, 20), more=(50, 24, 14)),
     "mobile": dict(W=640, X0=40, dir="assets/m", eyebrow=20, h=42, body=(26, 39), dp_title=28, dp_desc=(23, 34),
-                   bullet=(25, 37), rank=(26, 35), ev=(22, 31), group=19, label=19, icon=(56, 16), more=(56, 20, 7)),
+                   bullet=(25, 37), rank=(26, 35), ev=(22, 31), group=19, label=19, icon=(46, 10), more=(56, 20, 7)),
 }
 L = MODES["desktop"]
 W = X0 = TEXT_W = 0
