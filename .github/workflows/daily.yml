@@ -11,6 +11,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: activity-panel
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest

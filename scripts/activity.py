@@ -24,7 +24,10 @@ def fetch():
                                  data=json.dumps({"query": QUERY, "variables": {"login": LOGIN}}).encode(),
                                  headers={"Authorization": f"bearer {os.environ['GITHUB_TOKEN']}",
                                           "Content-Type": "application/json"})
-    cal = json.load(urllib.request.urlopen(req))["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+    res = json.load(urllib.request.urlopen(req, timeout=30))
+    if "errors" in res or not res.get("data"):
+        sys.exit(f"GitHub API error: {res.get('errors')}")
+    cal = res["data"]["user"]["contributionsCollection"]["contributionCalendar"]
     weeks = [[(d["date"], d["contributionCount"], LEVEL[d["contributionLevel"]]) for d in w["contributionDays"]]
              for w in cal["weeks"]]
     return cal["totalContributions"], weeks
@@ -44,17 +47,21 @@ def next_event(today):
     """Nearest event that has not ended yet, from scripts/src/events.txt."""
     best = None
     for line in (SRC / "events.txt").read_text().splitlines():
-        if not line.strip() or line.startswith("#"): continue
+        line = line.strip()
+        if not line or line.startswith("#"): continue
         parts = [p.strip() for p in line.split("|")]
-        start = dt.date.fromisoformat(parts[1])
-        end = dt.date.fromisoformat(parts[2]) if len(parts) > 2 and parts[2] else start
+        try:                               # a typo in the file should hide that line, not stop the panel
+            start = dt.date.fromisoformat(parts[1])
+            end = dt.date.fromisoformat(parts[2]) if len(parts) > 2 and parts[2] else start
+        except (IndexError, ValueError):
+            print("skipping bad events.txt line:", line); continue
         if end >= today and (best is None or start < best[1]):
             best = (parts[0], start, end)
     return best
 
 def event_strip(ev, today, x, y, w, mobile):
     name, start, end = ev
-    when = (f"{start.day}–{end.day} {end.strftime('%b %Y')}" if start.month == end.month and start != end
+    when = (f"{start.day}–{end.day} {end.strftime('%b %Y')}" if (start.year, start.month) == (end.year, end.month) and start != end
             else start.strftime("%-d %b %Y") + (" – " + end.strftime("%-d %b %Y") if end != start else ""))
     days = (start - today).days
     big = "HAPPENING NOW" if days <= 0 else ("TOMORROW" if days == 1 else f"IN {days} DAYS")

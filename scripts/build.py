@@ -414,7 +414,7 @@ readme = "\n".join([
     '<p align="center">' + " &#183; ".join(f'<a href="{u}"><b>{n}</b></a>' for n, u, _, _ in PROJECTS) + "</p>\n",
     ('<p align="center">\n  <picture>\n'
      f'    <source media="(max-width: 700px)" srcset="{RAW.replace("/main", "/output")}/activity-m.svg" />\n'
-     f'    <img src="{RAW.replace("/main", "/output")}/activity.svg" width="100%" alt="GitHub activity over the last 12 months, updated daily" />\n'
+     f'    <img src="{RAW.replace("/main", "/output")}/activity.svg" width="100%" alt="GitHub activity over the last 12 months, refreshed every few minutes" />\n'
      '  </picture>\n</p>\n'),
     pic("stack.svg", "Tech Stack: Python, C, C++, C#, TypeScript, JavaScript, Swift, React, Next.js, FastAPI, OpenCV, YOLO, PyTorch, TensorFlow, Arduino, Raspberry Pi, ESP32, Docker, AWS and more"),
     "<details>\n<summary><b>More tools I've worked with (55)</b></summary>\n<br />\n",
