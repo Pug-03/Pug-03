@@ -329,10 +329,48 @@ def stack_more(mobile):
         y += IS2 + GAP2
     save("stack-more.svg", panel(y + 30, body, glow=(0.5, 0.5), title="More tools"))
 
+# ================= featured projects =================
+PROJECTS = [
+    ("DeePer", "https://github.com/Pug-03/DeePer", "REACT · VITE · EXPRESS · SQLITE",
+     "Deep-conversation question cards for couples, friends and family who share one phone. Live at deeper.in.th."),
+    ("Walk We", "https://github.com/Pug-03/Walk_We", "CLAUDE · CLOUDFLARE WORKERS · MAPLIBRE · PWA",
+     "Mobile-first PWA that picks shadier daytime and safer night walking routes around Siam, Bangkok. Built for U-Hackathon 2026."),
+    ("Roo Mue", "https://github.com/Pug-03/Roo_mue_", "NEXT.JS · TENSORFLOW.JS · PRISMA",
+     "Translates Thai Sign Language into Thai text with on-camera sign recognition, emergency phrases and speech output."),
+    ("PushPug", "https://github.com/Pug-03/PushPug", "TYPESCRIPT · VS CODE",
+     "Desktop alerts the moment a teammate pushes, even with VS Code closed, and merges their code with yours in one click."),
+]
+def projects(mobile):
+    cols = 1 if mobile else 2
+    gap = 64
+    colw = (TEXT_W - gap * (cols - 1)) / cols
+    nsize, dsize, dlh = (30, 22, 31) if mobile else (30, 20, 29)
+    tsize = 16 if mobile else 14
+    y_start = 190
+    col_y = [y_start] * cols
+    out = ""
+    for i, (name, _, tags, desc) in enumerate(PROJECTS):
+        c = i % cols if not mobile else 0
+        x, y = X0 + c * (colw + gap), max(col_y) if c == 0 else col_y[c]
+        if c == 0: col_y = [y] * cols
+        top = y - 26
+        out += f'<text x="{x + 22}" y="{y}" font-family="{FONT}" font-size="{nsize}" font-weight="700" letter-spacing="-.6" fill="#ffffff">{name}</text>'
+        y += 30
+        out += f'<text x="{x + 22}" y="{y}" font-family="{MONO}" font-size="{tsize}" font-weight="600" letter-spacing="1.4" fill="{BLUE}">{esc(tags)}</text>'
+        y += dlh + 4
+        for ln in wrap([(desc, "n")], dsize, colw - 22):
+            out += line_svg(ln, x + 22, y, dsize, "#c7c7cc"); y += dlh
+        out += f'<rect x="{x}" y="{top}" width="3" height="{y - top - dlh + 8}" rx="1.5" fill="{BLUE}" fill-opacity=".7"/>'
+        col_y[c] = y + 36
+    h = max(col_y) + 4
+    head = eyebrow(72, "THINGS I'VE SHIPPED") + heading(124, "Featured Projects")
+    head += mascot("type2", 150, y=22) if not mobile else mascot("type2", 110, y=22, right=24)
+    save("projects.svg", panel(h, head + out, glow=(0.85, 0.85), title="Featured Projects"))
+
 for mode in MODES:
     use(mode)
     m = mode == "mobile"
-    banner(m); about(m); awards(m); stack(m); stack_more(m)
+    banner(m); about(m); awards(m); projects(m); stack(m); stack_more(m)
 
 # ================= README =================
 def pic(name, alt, link=None):
@@ -346,6 +384,8 @@ readme = "\n".join([
     pic("banner.svg", "Nathaporn Saituptim - AI, Computer Vision, Robotics. Founder &amp; CEO of DeePer"),
     pic("about.svg", "Hey, what's up? I'm Nathaporn Saituptim, a high school student developer and robotics innovator from Thailand. Founder &amp; CEO of DeePer (deeper.in.th). Working at Yeah Association.", "https://deeper.in.th"),
     pic("awards.svg", "Awards and Achievements"),
+    pic("projects.svg", "Featured projects: DeePer, Walk We, Roo Mue, PushPug"),
+    '<p align="center">' + " &#183; ".join(f'<a href="{u}"><b>{n}</b></a>' for n, u, _, _ in PROJECTS) + "</p>\n",
     ('<p align="center">\n  <picture>\n'
      f'    <source media="(max-width: 700px)" srcset="{RAW.replace("/main", "/output")}/activity-m.svg" />\n'
      f'    <img src="{RAW.replace("/main", "/output")}/activity.svg" width="100%" alt="GitHub activity over the last 12 months, updated daily" />\n'
