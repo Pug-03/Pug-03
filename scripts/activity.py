@@ -24,7 +24,10 @@ def fetch():
                                  data=json.dumps({"query": QUERY, "variables": {"login": LOGIN}}).encode(),
                                  headers={"Authorization": f"bearer {os.environ['GITHUB_TOKEN']}",
                                           "Content-Type": "application/json"})
-    cal = json.load(urllib.request.urlopen(req))["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+    res = json.load(urllib.request.urlopen(req, timeout=30))
+    if "errors" in res or not res.get("data"):
+        sys.exit(f"GitHub API error: {res.get('errors')}")
+    cal = res["data"]["user"]["contributionsCollection"]["contributionCalendar"]
     weeks = [[(d["date"], d["contributionCount"], LEVEL[d["contributionLevel"]]) for d in w["contributionDays"]]
              for w in cal["weeks"]]
     return cal["totalContributions"], weeks
