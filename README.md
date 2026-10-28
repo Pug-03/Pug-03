@@ -23,6 +23,13 @@
 
 <p align="center">
   <picture>
+    <source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Pug-03/Pug-03/output/activity-m.svg" />
+    <img src="https://raw.githubusercontent.com/Pug-03/Pug-03/output/activity.svg" width="100%" alt="GitHub activity over the last 12 months, updated daily" />
+  </picture>
+</p>
+
+<p align="center">
+  <picture>
     <source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Pug-03/Pug-03/main/assets/m/stack.svg" />
     <img src="assets/stack.svg" width="100%" alt="Tech Stack: Python, C, C++, C#, TypeScript, JavaScript, Swift, React, Next.js, FastAPI, OpenCV, YOLO, PyTorch, TensorFlow, Arduino, Raspberry Pi, ESP32, Docker, AWS and more" />
   </picture>

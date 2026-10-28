@@ -346,6 +346,10 @@ readme = "\n".join([
     pic("banner.svg", "Nathaporn Saituptim - AI, Computer Vision, Robotics. Founder &amp; CEO of DeePer"),
     pic("about.svg", "Hey, what's up? I'm Nathaporn Saituptim, a high school student developer and robotics innovator from Thailand. Founder &amp; CEO of DeePer (deeper.in.th). Working at Yeah Association.", "https://deeper.in.th"),
     pic("awards.svg", "Awards and Achievements"),
+    ('<p align="center">\n  <picture>\n'
+     f'    <source media="(max-width: 700px)" srcset="{RAW.replace("/main", "/output")}/activity-m.svg" />\n'
+     f'    <img src="{RAW.replace("/main", "/output")}/activity.svg" width="100%" alt="GitHub activity over the last 12 months, updated daily" />\n'
+     '  </picture>\n</p>\n'),
     pic("stack.svg", "Tech Stack: Python, C, C++, C#, TypeScript, JavaScript, Swift, React, Next.js, FastAPI, OpenCV, YOLO, PyTorch, TensorFlow, Arduino, Raspberry Pi, ESP32, Docker, AWS and more"),
     "<details>\n<summary><b>More tools I've worked with (55)</b></summary>\n<br />\n",
     pic("stack-more.svg", "More tools I've worked with") + "</details>\n",
