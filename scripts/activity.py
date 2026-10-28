@@ -44,10 +44,14 @@ def next_event(today):
     """Nearest event that has not ended yet, from scripts/src/events.txt."""
     best = None
     for line in (SRC / "events.txt").read_text().splitlines():
-        if not line.strip() or line.startswith("#"): continue
+        line = line.strip()
+        if not line or line.startswith("#"): continue
         parts = [p.strip() for p in line.split("|")]
-        start = dt.date.fromisoformat(parts[1])
-        end = dt.date.fromisoformat(parts[2]) if len(parts) > 2 and parts[2] else start
+        try:                               # a typo in the file should hide that line, not stop the panel
+            start = dt.date.fromisoformat(parts[1])
+            end = dt.date.fromisoformat(parts[2]) if len(parts) > 2 and parts[2] else start
+        except (IndexError, ValueError):
+            print("skipping bad events.txt line:", line); continue
         if end >= today and (best is None or start < best[1]):
             best = (parts[0], start, end)
     return best
