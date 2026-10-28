@@ -367,6 +367,32 @@ def projects(mobile):
     head += mascot("type2", 150, y=22) if not mobile else mascot("type2", 110, y=22, right=24)
     save("projects.svg", panel(h, head + out, glow=(0.85, 0.85), title="Featured Projects"))
 
+# ================= contact pills (one clickable image each) =================
+CONTACTS = [("contact-web.svg", "WEB", "deeper.in.th", "https://deeper.in.th"),
+            ("contact-instagram.svg", "INSTAGRAM", "@p_.ug_", "https://www.instagram.com/p_.ug_/"),
+            ("contact-email.svg", "EMAIL", "ftxz12789@gmail.com", "mailto:ftxz12789@gmail.com")]
+def contact_pill(name, label, value):
+    h = 60
+    w = round(54 + tw(label, 14, True) * 1.12 + 14 + tw(value, 20, True) + 30)
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">
+<title>{label.title()}: {esc(value)}</title>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#05070c"/><stop offset="1" stop-color="#0b1220"/></linearGradient>
+<radialGradient id="dotg"><stop offset="0" stop-color="#5ab4ff" stop-opacity=".9"/><stop offset=".35" stop-color="#2997ff" stop-opacity=".45"/><stop offset="1" stop-color="#2997ff" stop-opacity="0"/></radialGradient>
+</defs>
+<style>.pulse{{animation:pulse 6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}}
+@keyframes pulse{{0%,100%{{opacity:.7;transform:scale(1)}}50%{{opacity:1;transform:scale(1.07)}}}}
+@media (prefers-reduced-motion: reduce){{.pulse{{animation:none}}}}</style>
+<rect x=".5" y=".5" width="{w - 1}" height="{h - 1}" rx="{h / 2 - .5}" fill="url(#bg)" stroke="#2997ff" stroke-opacity=".45"/>
+{glow_dot(30, h / 2, 5.5)}
+<text x="50" y="{h / 2 + 5}" font-family="{MONO}" font-size="14" font-weight="700" letter-spacing="2" fill="{BLUE}">{label}</text>
+<text x="{50 + tw(label, 14, True) * 1.12 + 14:.0f}" y="{h / 2 + 7}" font-family="{FONT}" font-size="20" font-weight="700" fill="#ffffff">{esc(value)}</text>
+</svg>'''
+    (REPO / "assets" / name).write_text(svg)
+
+for name, label, value, _ in CONTACTS:
+    contact_pill(name, label, value)
+
 for mode in MODES:
     use(mode)
     m = mode == "mobile"
@@ -393,5 +419,8 @@ readme = "\n".join([
     pic("stack.svg", "Tech Stack: Python, C, C++, C#, TypeScript, JavaScript, Swift, React, Next.js, FastAPI, OpenCV, YOLO, PyTorch, TensorFlow, Arduino, Raspberry Pi, ESP32, Docker, AWS and more"),
     "<details>\n<summary><b>More tools I've worked with (55)</b></summary>\n<br />\n",
     pic("stack-more.svg", "More tools I've worked with") + "</details>\n",
+    '<p align="center">\n' + "\n".join(
+        f'  <a href="{url}"><img src="assets/{name}" height="52" alt="{label.title()}: {value}" /></a>'
+        for name, label, value, url in CONTACTS) + "\n</p>\n",
 ])
 (REPO / "README.md").write_text(readme)

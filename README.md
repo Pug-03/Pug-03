@@ -55,3 +55,9 @@
   </picture>
 </p>
 </details>
+
+<p align="center">
+  <a href="https://deeper.in.th"><img src="assets/contact-web.svg" height="52" alt="Web: deeper.in.th" /></a>
+  <a href="https://www.instagram.com/p_.ug_/"><img src="assets/contact-instagram.svg" height="52" alt="Instagram: @p_.ug_" /></a>
+  <a href="mailto:ftxz12789@gmail.com"><img src="assets/contact-email.svg" height="52" alt="Email: ftxz12789@gmail.com" /></a>
+</p>
