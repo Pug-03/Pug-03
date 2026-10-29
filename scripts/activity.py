@@ -13,7 +13,7 @@ FONT = '-apple-system, BlinkMacSystemFont, &quot;SF Pro Display&quot;, &quot;Seg
 MONO = 'ui-monospace, &quot;SF Mono&quot;, Menlo, Consolas, monospace'
 BLUE = "#2997ff"
 LEVELS = ["#ffffff", "#0d3b70", "#1661bd", "#2997ff", "#7cc4ff"]   # level 0 is drawn at low opacity
-POSES = ["type1", "think", "drink", "happy", "stretch", "type2", "o_hoodie"]   # one per weekday
+POSES = ["side", "think", "drink", "phone", "stretch", "back", "o_hoodie"]   # one per weekday
 
 QUERY = """query($login:String!){user(login:$login){contributionsCollection{contributionCalendar{
 totalContributions weeks{contributionDays{date contributionCount contributionLevel}}}}}}"""

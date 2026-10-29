@@ -222,7 +222,7 @@ def about(mobile):
             body += line_svg(ln, X0 + 26, y, bsize); y += blh
         y += 10
     ah = y + 30
-    body += mascot("happy", 150, bottom=22, ph=ah) if not mobile else mascot("happy", 110, y=26, right=28)
+    body += mascot("phone", 150, bottom=22, ph=ah) if not mobile else mascot("phone", 110, y=26, right=28)
     save("about.svg", panel(ah, body, glow=(0.9, 0.15), title="About me"))
 
 # ================= awards =================
@@ -320,7 +320,7 @@ def stack_more(mobile):
     y = 72
     title = "Tools I've worked with" if not mobile else "More tools"
     body = eyebrow(y, "55 MORE") + heading(y + 52, title)
-    body += mascot("type1", 140, y=26) if not mobile else mascot("type1", 110, y=22, right=24)
+    body += mascot("side", 140, y=26) if not mobile else mascot("side", 110, y=22, right=24)
     y += 120
     for r in rows:
         x = (W - (len(r) * IS2 + (len(r) - 1) * GAP2)) / 2
@@ -364,7 +364,7 @@ def projects(mobile):
         col_y[c] = y + 36
     h = max(col_y) + 4
     head = eyebrow(72, "THINGS I'VE SHIPPED") + heading(124, "Featured Projects")
-    head += mascot("type2", 150, y=22) if not mobile else mascot("type2", 110, y=22, right=24)
+    head += mascot("back", 150, y=22) if not mobile else mascot("back", 110, y=22, right=24)
     save("projects.svg", panel(h, head + out, glow=(0.85, 0.85), title="Featured Projects"))
 
 # ================= contact pills (one clickable image each) =================
