@@ -1,6 +1,8 @@
 """Cut one character out of a flat-background sprite sheet.
 
-usage: python3 scripts/cut.py SHEET.png x0,y0,x1,y1 scripts/src/poses/NAME.png
+usage: python3 scripts/cut.py SHEET.png x0,y0,x1,y1 scripts/src/poses/NAME.png [MIN_MARK_PX]
+Pass MIN_MARK_PX to also keep loose marks of at least that many pixels (surprise lines, Zzz),
+recoloured light so they still read on the dark panels.
 Keys out the sheet's background colour (sampled from the crop border), drops the
 drawn floor shadow and enclosed background holes, and unmixes the anti-aliased edge.
 Needs Pillow, numpy, scipy.
@@ -21,6 +23,8 @@ bg=np.isin(lab,list(border))
 fg=~bg
 lab2,n=ndi.label(fg); sizes=ndi.sum(fg,lab2,range(1,n+1))
 fg=lab2==(np.argmax(sizes)+1)
+marks=np.zeros_like(fg)
+if len(sys.argv)>4: marks=np.isin(lab2,np.where(sizes>=int(sys.argv[4]))[0]+1)&~fg; fg|=marks
 meank=ndi.mean(k,lab,range(1,lab.max()+1)); sz=ndi.sum(bglike,lab,range(1,lab.max()+1)); meanr=ndi.mean(res,lab,range(1,lab.max()+1)); big=np.where((sz>20)&(meank>0.62)&(meanr<4.5) | (sz>40)&(meank>0.7)&(meanr<7))[0]+1; fg&=~np.isin(lab,big)
 # soft edge: in band around boundary estimate alpha by unmixing vs local bg (k*B)
 band=fg & ~ndi.binary_erosion(fg,iterations=2)
@@ -37,6 +41,7 @@ alpha=np.maximum(alpha, ndi.binary_erosion(fg,iterations=2))
 col=src.copy()
 m=band&(alpha>0.02)
 col[m]=np.clip((src[m]-(1-alpha[m])[:,None]*bgcol[m])/alpha[m][:,None],0,255)
+col[ndi.binary_dilation(marks)]=(220,220,225)
 rgba=np.dstack([col,alpha*255]).astype(np.uint8)
 im=Image.fromarray(rgba,"RGBA"); im=im.crop(im.getchannel("A").getbbox())
 im.save(sys.argv[3]); print(im.size)

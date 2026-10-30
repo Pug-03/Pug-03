@@ -1,9 +1,9 @@
-# pose name | sheet | crop box x0,y0,x1,y1  (sheets live outside the repo, in ~/Downloads)
+# pose name | sheet | crop box x0,y0,x1,y1 [| min mark px]  (sheets live outside the repo, in ~/Downloads)
 main|Anime Desk Character Pose Sheet.png|0,30,600,740
 stretch|Anime Desk Character Pose Sheet.png|1045,990,1245,1206
 think|Anime Desk Character Pose Sheet.png|430,728,630,958
 drink|Anime Desk Character Pose Sheet.png|840,990,1040,1206
 phone|Anime Desk Character Pose Sheet.png|635,990,835,1206
 side|Anime Desk Character Pose Sheet.png|790,60,1010,345
-back|Anime Desk Character Pose Sheet.png|1005,400,1240,675
+surprised|Anime Desk Character Pose Sheet.png|225,990,425,1206|8
 o_hoodie|Sixteen Outfit Variations Character Sheet.png|775,96,960,530

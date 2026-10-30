@@ -112,6 +112,10 @@ def mascot(pose, h, x=None, y=None, right=56, bottom=None, ph=None):
     if pose not in _uris: _uris[pose] = webp_uri(im)
     return (f'<ellipse cx="{x + w / 2}" cy="{y + h * 0.55}" rx="{w * 0.75}" ry="{h * 0.6}" fill="url(#glow)"/>'
             f'<g class="bob"><image x="{x}" y="{y}" width="{w}" height="{h}" href="{_uris[pose]}"/></g>')
+def logo(name, w, cx, cy):
+    im = Image.open(SRC / "logos" / f"{name}.png")
+    h = round(im.height / im.width * w)
+    return f'<g class="bob"><image x="{cx - w / 2}" y="{cy - h / 2}" width="{w}" height="{h}" opacity=".9" href="{webp_uri(im)}"/></g>'
 def glow_dot(cx, cy, r=5):
     return (f'<circle class="pulse" cx="{cx}" cy="{cy}" r="{r * 3.4}" fill="url(#dotg)"/>'
             f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="#5ab4ff"/>')
@@ -263,8 +267,12 @@ def awards(mobile):
     head = eyebrow(72, "TRACK RECORD") + heading(124, "Awards & Achievements")
     if not mobile:
         head += mascot("stretch", 170, y=26)
-        head += mascot("o_hoodie", 200, y=round(y * 0.42), right=80)
-        head += mascot("drink", 150, bottom=24, ph=h)
+        head += mascot("o_hoodie", 200, bottom=24, ph=h)
+        head += mascot("drink", 150, bottom=24, ph=h, right=170)
+        # logos stacked in the middle of the empty column between the top and bottom mascots
+        mid = (196 + h - 224) / 2
+        head += logo("mitmedialab", 130, 1030, mid - 140)
+        head += logo("aws", 110, 1030, mid + 140)
     else:
         head += mascot("stretch", 120, y=18, right=24)
     save("awards.svg", panel(h, head + out, glow=(0.15, 0.1), title="Awards and Achievements"))
@@ -364,7 +372,7 @@ def projects(mobile):
         col_y[c] = y + 36
     h = max(col_y) + 4
     head = eyebrow(72, "THINGS I'VE SHIPPED") + heading(124, "Featured Projects")
-    head += mascot("back", 150, y=22) if not mobile else mascot("back", 110, y=22, right=24)
+    head += mascot("surprised", 150, y=22) if not mobile else mascot("surprised", 110, y=22, right=24)
     save("projects.svg", panel(h, head + out, glow=(0.85, 0.85), title="Featured Projects"))
 
 # ================= contact pills (one clickable image each) =================
