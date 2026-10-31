@@ -153,11 +153,11 @@ def code_lines(cx, cy, ch):
 def banner(mobile):
     c, uri = banner_char()
     if not mobile:
-        H, ch, px, py, pgap, psize = 380, 330, 476, 118, 52, 18
+        H, ch, px, py, pgap, psize = 380, 330, 476, 130, 40, 18
         name_size, name_y, tag = 68, (148, 216), (264, 27)
         ceo_y, ceo_size, status_size = 288, 20, 18
     else:
-        H, ch, px, py, pgap, psize = 520, 220, X0, 368, 50, 22
+        H, ch, px, py, pgap, psize = 520, 220, X0, 378, 40, 22
         name_size, name_y, tag = 64, (138, 202), (250, 26)
         ceo_y, ceo_size, status_size = 272, 22, 20
     cw = round(c.width / c.height * ch)
