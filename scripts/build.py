@@ -153,7 +153,7 @@ def code_lines(cx, cy, ch):
 def banner(mobile):
     c, uri = banner_char()
     if not mobile:
-        H, ch, px, py, pgap, psize = 380, 330, 476, 130, 40, 18
+        H, ch, px, py, pgap, psize = 380, 330, 500, 130, 40, 18
         name_size, name_y, tag = 68, (148, 216), (264, 27)
         ceo_y, ceo_size, status_size = 288, 20, 18
     else:
@@ -168,6 +168,11 @@ def banner(mobile):
         f'<text x="30" y="{psize * 0.36:.1f}" font-family="{FONT}" font-size="{psize}" font-weight="600" fill="#ffffff">{a}'
         f'<tspan fill="#6e6e73"> &#183; </tspan><tspan fill="#d1d1d6" font-weight="500">{b}</tspan></text></g>'
         for i, (a, b) in enumerate(PILLS))
+    if not mobile:
+        # a labelled column with its own rule, so the highlights line up with the status line and the name
+        pill_svg = (f'<line x1="{px - 26}" y1="52" x2="{px - 26}" y2="{py + 2 * pgap + 12}" stroke="#fff" stroke-opacity=".12"/>'
+                    f'<text x="{px}" y="70" font-family="{MONO}" font-size="{status_size}" font-weight="600" letter-spacing="2.4" fill="{BLUE}">HIGHLIGHTS</text>'
+                    + pill_svg)
     ceo_w = round(tw("Founder & CEO of ", ceo_size, True) + tw("DeePer", ceo_size, True) + 50)
     ceo_h = round(ceo_size * 2.6)
     link = ("" if mobile else
