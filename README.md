@@ -24,11 +24,11 @@
 <p align="center">
   <picture>
     <source media="(max-width: 700px)" srcset="https://raw.githubusercontent.com/Pug-03/Pug-03/main/assets/m/projects.svg" />
-    <img src="assets/projects.svg" width="100%" alt="Featured projects: DeePer, Walk We, Roo Mue, PushPug" />
+    <img src="assets/projects.svg" width="100%" alt="Featured projects: AFK Pug (coming soon), Walk We, Roo Mue, PushPug" />
   </picture>
 </p>
 
-<p align="center"><a href="https://github.com/Pug-03/DeePer"><b>DeePer</b></a> &#183; <a href="https://github.com/Pug-03/Walk_We"><b>Walk We</b></a> &#183; <a href="https://github.com/Pug-03/Roo_mue_"><b>Roo Mue</b></a> &#183; <a href="https://github.com/Pug-03/PushPug"><b>PushPug</b></a></p>
+<p align="center"><a href="https://github.com/Pug-03/AFK_Pug"><b>AFK Pug</b></a> &#183; <a href="https://github.com/Pug-03/Walk_We"><b>Walk We</b></a> &#183; <a href="https://github.com/Pug-03/Roo_mue_"><b>Roo Mue</b></a> &#183; <a href="https://github.com/Pug-03/PushPug"><b>PushPug</b></a></p>
 
 <p align="center">
   <picture>

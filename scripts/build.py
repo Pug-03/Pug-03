@@ -344,8 +344,8 @@ def stack_more(mobile):
 
 # ================= featured projects =================
 PROJECTS = [
-    ("DeePer", "https://github.com/Pug-03/DeePer", "REACT · VITE · EXPRESS · SQLITE",
-     "Deep-conversation question cards for couples, friends and family who share one phone. Live at deeper.in.th."),
+    ("AFK Pug", "https://github.com/Pug-03/AFK_Pug", "SWIFT · MACOS · MENU BAR",
+     "Keeps your MacBook working with the lid closed while AI agents run, then lets it sleep as soon as the work is done."),
     ("Walk We", "https://github.com/Pug-03/Walk_We", "CLAUDE · CLOUDFLARE WORKERS · MAPLIBRE · PWA",
      "Mobile-first PWA that picks shadier daytime and safer night walking routes around Siam, Bangkok. Built for U-Hackathon 2026."),
     ("Roo Mue", "https://github.com/Pug-03/Roo_mue_", "NEXT.JS · TENSORFLOW.JS · PRISMA",
@@ -353,6 +353,7 @@ PROJECTS = [
     ("PushPug", "https://github.com/Pug-03/PushPug", "TYPESCRIPT · VS CODE",
      "Desktop alerts the moment a teammate pushes, even with VS Code closed, and merges their code with yours in one click."),
 ]
+COMING_SOON = {"AFK Pug"}
 def projects(mobile):
     cols = 1 if mobile else 2
     gap = 64
@@ -368,6 +369,10 @@ def projects(mobile):
         if c == 0: col_y = [y] * cols
         top = y - 26
         out += f'<text x="{x + 22}" y="{y}" font-family="{FONT}" font-size="{nsize}" font-weight="700" letter-spacing="-.6" fill="#ffffff">{name}</text>'
+        if name in COMING_SOON:
+            bx, bw = x + 22 + tw(name, nsize, True) + 14, 124
+            out += (f'<rect x="{bx:.0f}" y="{y - 22}" width="{bw}" height="26" rx="13" fill="{BLUE}" fill-opacity=".14" stroke="{BLUE}" stroke-opacity=".6"/>'
+                    f'<text x="{bx + bw / 2:.0f}" y="{y - 4}" text-anchor="middle" font-family="{MONO}" font-size="13" font-weight="700" letter-spacing="1.4" fill="{BLUE}">COMING SOON</text>')
         y += 30
         out += f'<text x="{x + 22}" y="{y}" font-family="{MONO}" font-size="{tsize}" font-weight="600" letter-spacing="1.4" fill="{BLUE}">{esc(tags)}</text>'
         y += dlh + 4
@@ -423,7 +428,7 @@ readme = "\n".join([
     pic("banner.svg", "Nathaporn Saituptim - AI, Computer Vision, Robotics. Founder &amp; CEO of DeePer"),
     pic("about.svg", "Hey, what's up? I'm Nathaporn Saituptim, a high school student developer and robotics innovator from Thailand. Founder &amp; CEO of DeePer (deeper.in.th). Working at Yeah Association.", "https://deeper.in.th"),
     pic("awards.svg", "Awards and Achievements"),
-    pic("projects.svg", "Featured projects: DeePer, Walk We, Roo Mue, PushPug"),
+    pic("projects.svg", "Featured projects: AFK Pug (coming soon), Walk We, Roo Mue, PushPug"),
     '<p align="center">' + " &#183; ".join(f'<a href="{u}"><b>{n}</b></a>' for n, u, _, _ in PROJECTS) + "</p>\n",
     ('<p align="center">\n  <picture>\n'
      f'    <source media="(max-width: 700px)" srcset="{RAW.replace("/main", "/output")}/activity-m.svg" />\n'
