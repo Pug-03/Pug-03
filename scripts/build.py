@@ -238,6 +238,7 @@ def about(mobile):
 GROUPS = [
     ("AI &amp; SOFTWARE INNOVATION", [
         ("Top 3 Global Finalist", "AI & Robotics Hackathon 2025 by MIT Media Lab"),
+        ("2nd Place · International Track", "OpenAI x SEA Hackathon · ranked 2nd out of 400 teams"),
         ("1st Place Winner", "GLO Innovation 2026 · selected from 173 teams"),
         ("Best App Design for Elderly & Alzheimer's Patients", "KMITL ToBeIT'69"),
         ("Top 4 Finalist", "Play to Build AI Hackathon, SEABW 2026 by AWS · the only solo student against pro teams"),
